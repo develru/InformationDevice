@@ -28,7 +28,7 @@ namespace InformationDevice
             this.InitializeComponent();
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             RootObject myWeather = await OpenWeatherMapProxy.GetWeather();
             String icon = string.Format("http://openweathermap.org/img/w/{0}.png", myWeather.weather[0].icon);
