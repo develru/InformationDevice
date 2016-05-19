@@ -31,7 +31,7 @@ namespace InformationDevice
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             RootObject myWeather = await OpenWeatherMapProxy.GetWeather();
-            String icon = string.Format("http://openweathermap.org/img/w/{0}.png", myWeather.weather[0].icon);
+            string icon = string.Format("ms-appx:///Assets/Weather/{0}.png", myWeather.weather[0].icon);
             ResultImage.Source = new BitmapImage(new Uri(icon, UriKind.Absolute));
             ResultTextBlock.Text = myWeather.name + " - " + (int)myWeather.main.temp + " - " + myWeather.weather[0].description;
         }
