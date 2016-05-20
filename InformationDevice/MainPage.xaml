@@ -7,14 +7,92 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="Page_Loaded">
 
-    <StackPanel Background="SeaGreen">
-        <StackPanel VerticalAlignment="Center">
-            <!--<Button Content="Get Weather" Click="Button_Click"/>-->
-            <Image Name="ResultImage"  Width="200" Height="200" HorizontalAlignment="Center"/>
-            <TextBlock Name="ResultTextBlock" 
+    <Grid Background="SeaGreen">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <RelativePanel>
+            <Button Name="HamburgerButton"
+                    RelativePanel.AlignLeftWithPanel="True"
+                    Click="HamburgerButton_Click"
+                    FontFamily="Segoe MDL2 Assets" 
+                    FontSize="20"
+                    Height="45"
+                    Width="45"
+                    Content="&#xE700;"/>
+        </RelativePanel>
+
+        <SplitView Grid.Row="1"
+                   Name="MySplitView"
+                   DisplayMode="CompactOverlay"
+                   CompactPaneLength="45"
+                   OpenPaneLength="200">
+            <SplitView.Pane>
+                <StackPanel Background="#FF125530">
+                    <Button Content="Test"/>
+                </StackPanel>
+            </SplitView.Pane>
+
+            <SplitView.Content>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel VerticalAlignment="Center" Grid.Column="0">
+                        <!--<Button Content="Get Weather" Click="Button_Click"/>-->
+                        <Image Name="ResultImage"  Width="200" Height="200" HorizontalAlignment="Center"/>
+                        <TextBlock Name="ResultTextBlock" 
                    Style="{StaticResource CaptionTextBlockStyle}" 
                    Foreground="White"
                    HorizontalAlignment="Center"/>
-        </StackPanel>
-    </StackPanel>
+                        <TextBlock Name="TempTextBlock" 
+                       Text="" 
+                       Foreground="White" 
+                       Style="{StaticResource HeaderTextBlockStyle}"
+                       HorizontalAlignment="Center"/>
+                        <TextBlock Name="DescriptionTextBlock" 
+                       Text="" 
+                       Foreground="White" 
+                       Style="{StaticResource SubheaderTextBlockStyle}"
+                       HorizontalAlignment="Center"/>
+                        <TextBlock Name="LocationTextBlock" 
+                       Text="" 
+                       Foreground="White" 
+                       Style="{StaticResource BaseTextBlockStyle}"
+                       HorizontalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                        <StackPanel Orientation="Horizontal" Margin="10">
+                            <Image Name="Day1Icon" Width="50" Height="50" HorizontalAlignment="Center"  Margin="10"/>
+                            <StackPanel Margin="10">
+                                <TextBlock Name="Day1TempTextBlock" Foreground="White" Text=""/>
+                                <TextBlock Name="Day1DescriptionTextBlock" Foreground="White" Text=""/>
+                                <TextBlock Name="Day1TimeTextBlock" Foreground="White" Text=""/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"  Margin="10">
+                            <Image Name="Day2Icon" Width="50" Height="50" HorizontalAlignment="Center" Margin="10"/>
+                            <StackPanel>
+                                <TextBlock Name="Day2TempTextBlock" Foreground="White" Text=""/>
+                                <TextBlock Name="Day2DescriptionTextBlock" Foreground="White" Text=""/>
+                                <TextBlock Name="Day2TimeTextBlock" Foreground="White" Text=""/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal"  Margin="10">
+                            <Image Name="Day3Icon" Width="50" Height="50" HorizontalAlignment="Center" Margin="10"/>
+                            <StackPanel  Margin="10">
+                                <TextBlock Name="Day3TempTextBlock" Foreground="White" Text=""/>
+                                <TextBlock Name="Day3DescriptionTextBlock" Foreground="White" Text=""/>
+                                <TextBlock Name="Day3TimeTextBlock" Foreground="White" Text=""/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
+    </Grid>
 </Page>

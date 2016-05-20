@@ -24,7 +24,7 @@ namespace InformationDevice
                     line = sr.ReadLine();
                 }
             }
-            catch (Exception ex)
+            catch
             {
 
             }
