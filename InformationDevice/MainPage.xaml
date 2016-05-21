@@ -7,6 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="Page_Loaded">
 
+    <Page.Resources>
+        <CollectionViewSource x:Name="ForecastsCollection" Source="{x:Bind myForecastDataList}" />
+        <local:UnixTimeFormatter x:Key="UnixTimeValueFormatter" />
+        <local:MaxMinTempFormatter x:Key="MaxMinTempValueFormatter" />
+        <local:IconFormatter x:Key="IconValueFormatter" />
+    </Page.Resources>
+
     <Grid Background="SeaGreen">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -65,7 +72,30 @@
                        Style="{StaticResource BaseTextBlockStyle}"
                        HorizontalAlignment="Center"/>
                     </StackPanel>
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <ListView Name="ForecastDataListView"
+                                  ItemsSource="{Binding Source={StaticResource ForecastsCollection}}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="local:List">
+                                    <StackPanel Orientation="Horizontal" Margin="10">
+                                        <Image Width="50" Height="50"
+                                               Margin="0,0,20,0"
+                                               Source="{Binding weather[0].icon, Converter={StaticResource IconValueFormatter}}"/>
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <TextBlock Foreground="White"
+                                                       Style="{StaticResource SubtitleTextBlockStyle}"
+                                                       Text="{Binding temp, Converter={StaticResource MaxMinTempValueFormatter}}" />
+                                            <TextBlock Foreground="White"
+                                                       Text="{Binding weather[0].description}"/>
+                                            <TextBlock Foreground="White"
+                                                Text="{Binding dt, Converter={StaticResource UnixTimeValueFormatter}}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                    <!--<StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
                         <StackPanel Orientation="Horizontal" Margin="10">
                             <Image Name="Day1Icon" Width="50" Height="50" HorizontalAlignment="Center"  Margin="10"/>
                             <StackPanel Margin="10">
@@ -90,7 +120,7 @@
                                 <TextBlock Name="Day3TimeTextBlock" Foreground="White" Text=""/>
                             </StackPanel>
                         </StackPanel>
-                    </StackPanel>
+                    </StackPanel>-->
                 </Grid>
             </SplitView.Content>
         </SplitView>

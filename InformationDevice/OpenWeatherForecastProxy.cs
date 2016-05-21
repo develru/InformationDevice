@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -12,7 +13,7 @@ namespace InformationDevice
 {
     class OpenWeatherForecastProxy
     {
-        public async static Task<ForecastRootobject> GetForecast()
+        public async static Task GetForecast(ObservableCollection<List> forecastData)
         {
             string line = "";
 
@@ -30,14 +31,19 @@ namespace InformationDevice
             }
 
             var http = new HttpClient();
-            var response = await http.GetAsync("http://api.openweathermap.org/data/2.5/forecast/daily?q=Dachau,de&cnt=3&units=metric&APPID=" + line);
+            var response = await http.GetAsync("http://api.openweathermap.org/data/2.5/forecast/daily?q=Dachau,de&cnt=4&units=metric&APPID=" + line);
             var result = await response.Content.ReadAsStringAsync();
             var serializer = new DataContractJsonSerializer(typeof(ForecastRootobject));
 
             var ms = new MemoryStream(Encoding.UTF8.GetBytes(result));
             var data = (ForecastRootobject)serializer.ReadObject(ms);
 
-            return data;
+            forecastData.Clear();
+            var length = data.list.Length;
+            for (var i = 0; i<length; i++)
+            {
+                forecastData.Add(data.list[i]);
+            }
         }
     }
 

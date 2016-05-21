@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -25,12 +26,17 @@ namespace InformationDevice
     public sealed partial class MainPage : Page
     {
         private  DispatcherTimer timer;
+
+        public ObservableCollection<List> myForecastDataList { get; set; }
+
         public MainPage()
         {
             timer = new DispatcherTimer();
             timer.Tick += WeatherUpdateTimeout;
 
             this.InitializeComponent();
+
+            myForecastDataList = new ObservableCollection<List>();
         }
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
@@ -52,38 +58,34 @@ namespace InformationDevice
                 LocationTextBlock.Text = myWeather.name;
 
                 // Forecast
-                ForecastRootobject myForecast = await OpenWeatherForecastProxy.GetForecast();
-                string forecastIconDay1 = string.Format("ms-appx:///Assets/Weather/{0}.png", myForecast.list[0].weather[0].icon);
-                Day1Icon.Source = new BitmapImage(new Uri(forecastIconDay1, UriKind.Absolute));
-                Day1TempTextBlock.Text = (int)myForecast.list[0].temp.max + "°C / " + (int)myForecast.list[0].temp.min + "°C";
-                Day1DescriptionTextBlock.Text = myForecast.list[0].weather[0].description;
-                var day1Time = FromUnixTime(myForecast.list[0].dt);
-                Day1TimeTextBlock.Text = day1Time.ToLocalTime().ToString();
+                await OpenWeatherForecastProxy.GetForecast(myForecastDataList);
 
-                string forecastIconDay2 = string.Format("ms-appx:///Assets/Weather/{0}.png", myForecast.list[1].weather[0].icon);
-                Day2Icon.Source = new BitmapImage(new Uri(forecastIconDay2, UriKind.Absolute));
-                Day2TempTextBlock.Text = (int)myForecast.list[1].temp.max + "°C / " + (int)myForecast.list[1].temp.min + "°C";
-                Day2DescriptionTextBlock.Text = myForecast.list[1].weather[0].description;
-                var day2Time = FromUnixTime(myForecast.list[1].dt);
-                Day2TimeTextBlock.Text = day2Time.ToLocalTime().ToString();
+                //ForecastRootobject myForecast = await OpenWeatherForecastProxy.GetForecast();
+                //string forecastIconDay1 = string.Format("ms-appx:///Assets/Weather/{0}.png", myForecast.list[0].weather[0].icon);
+                //Day1Icon.Source = new BitmapImage(new Uri(forecastIconDay1, UriKind.Absolute));
+                //Day1TempTextBlock.Text = (int)myForecast.list[0].temp.max + "°C / " + (int)myForecast.list[0].temp.min + "°C";
+                //Day1DescriptionTextBlock.Text = myForecast.list[0].weather[0].description;
+                //var day1Time = FromUnixTime(myForecast.list[0].dt);
+                //Day1TimeTextBlock.Text = day1Time.ToLocalTime().ToString();
 
-                string forecastIconDay3 = string.Format("ms-appx:///Assets/Weather/{0}.png", myForecast.list[2].weather[0].icon);
-                Day3Icon.Source = new BitmapImage(new Uri(forecastIconDay3, UriKind.Absolute));
-                Day3TempTextBlock.Text = (int)myForecast.list[2].temp.max + "°C / " + (int)myForecast.list[2].temp.min + "°C";
-                Day3DescriptionTextBlock.Text = myForecast.list[2].weather[0].description;
-                var day3Time = FromUnixTime(myForecast.list[2].dt);
-                Day3TimeTextBlock.Text = day3Time.ToLocalTime().ToString(); 
+                //string forecastIconDay2 = string.Format("ms-appx:///Assets/Weather/{0}.png", myForecast.list[1].weather[0].icon);
+                //Day2Icon.Source = new BitmapImage(new Uri(forecastIconDay2, UriKind.Absolute));
+                //Day2TempTextBlock.Text = (int)myForecast.list[1].temp.max + "°C / " + (int)myForecast.list[1].temp.min + "°C";
+                //Day2DescriptionTextBlock.Text = myForecast.list[1].weather[0].description;
+                //var day2Time = FromUnixTime(myForecast.list[1].dt);
+                //Day2TimeTextBlock.Text = day2Time.ToLocalTime().ToString();
+
+                //string forecastIconDay3 = string.Format("ms-appx:///Assets/Weather/{0}.png", myForecast.list[2].weather[0].icon);
+                //Day3Icon.Source = new BitmapImage(new Uri(forecastIconDay3, UriKind.Absolute));
+                //Day3TempTextBlock.Text = (int)myForecast.list[2].temp.max + "°C / " + (int)myForecast.list[2].temp.min + "°C";
+                //Day3DescriptionTextBlock.Text = myForecast.list[2].weather[0].description;
+                //var day3Time = FromUnixTime(myForecast.list[2].dt);
+                //Day3TimeTextBlock.Text = day3Time.ToLocalTime().ToString(); 
             }
             catch
             {
                 LocationTextBlock.Text = "Unable to get the weather data!";
             }
-        }
-
-        private DateTime FromUnixTime(long unixTime)
-        {
-            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return epoch.AddSeconds(unixTime);
         }
 
         private async void WeatherUpdateTimeout(object sender, object e)
