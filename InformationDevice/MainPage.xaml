@@ -44,6 +44,10 @@
 
             <SplitView.Content>
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" />
                         <ColumnDefinition Width="1*" />
@@ -74,7 +78,9 @@
                     </StackPanel>
                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
                         <ListView Name="ForecastDataListView"
-                                  ItemsSource="{Binding Source={StaticResource ForecastsCollection}}">
+                                  ItemsSource="{Binding Source={StaticResource ForecastsCollection}}"
+                                  IsItemClickEnabled="False"
+                                  SelectionMode="None">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="local:List">
                                     <StackPanel Orientation="Horizontal" Margin="10">
@@ -95,32 +101,11 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </StackPanel>
-                    <!--<StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="20">
-                        <StackPanel Orientation="Horizontal" Margin="10">
-                            <Image Name="Day1Icon" Width="50" Height="50" HorizontalAlignment="Center"  Margin="10"/>
-                            <StackPanel Margin="10">
-                                <TextBlock Name="Day1TempTextBlock" Foreground="White" Text=""/>
-                                <TextBlock Name="Day1DescriptionTextBlock" Foreground="White" Text=""/>
-                                <TextBlock Name="Day1TimeTextBlock" Foreground="White" Text=""/>
-                            </StackPanel>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal"  Margin="10">
-                            <Image Name="Day2Icon" Width="50" Height="50" HorizontalAlignment="Center" Margin="10"/>
-                            <StackPanel>
-                                <TextBlock Name="Day2TempTextBlock" Foreground="White" Text=""/>
-                                <TextBlock Name="Day2DescriptionTextBlock" Foreground="White" Text=""/>
-                                <TextBlock Name="Day2TimeTextBlock" Foreground="White" Text=""/>
-                            </StackPanel>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal"  Margin="10">
-                            <Image Name="Day3Icon" Width="50" Height="50" HorizontalAlignment="Center" Margin="10"/>
-                            <StackPanel  Margin="10">
-                                <TextBlock Name="Day3TempTextBlock" Foreground="White" Text=""/>
-                                <TextBlock Name="Day3DescriptionTextBlock" Foreground="White" Text=""/>
-                                <TextBlock Name="Day3TimeTextBlock" Foreground="White" Text=""/>
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>-->
+                    <TextBlock Grid.Row="1" 
+                               Grid.ColumnSpan="2"
+                               Margin="10,0,0,10"
+                               Name="StatusTextBlock" 
+                               Foreground="DarkGray" />
                 </Grid>
             </SplitView.Content>
         </SplitView>
