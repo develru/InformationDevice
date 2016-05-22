@@ -5,14 +5,7 @@
     xmlns:local="using:InformationDevice"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Loaded="Page_Loaded">
-
-    <Page.Resources>
-        <CollectionViewSource x:Name="ForecastsCollection" Source="{x:Bind myForecastDataList}" />
-        <local:UnixTimeFormatter x:Key="UnixTimeValueFormatter" />
-        <local:MaxMinTempFormatter x:Key="MaxMinTempValueFormatter" />
-        <local:IconFormatter x:Key="IconValueFormatter" />
-    </Page.Resources>
+    mc:Ignorable="d">
 
     <Grid Background="SeaGreen">
         <Grid.RowDefinitions>
@@ -38,75 +31,17 @@
                    OpenPaneLength="200">
             <SplitView.Pane>
                 <StackPanel Background="#FF125530">
-                    <Button Content="Test"/>
+                    <Button>
+                        <StackPanel Orientation="Horizontal">
+                            <SymbolIcon Symbol="Globe" Foreground="White" Margin="5,0,10,0"/>
+                            <TextBlock Text="Weather" Foreground="White" />
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </SplitView.Pane>
 
             <SplitView.Content>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="1*" />
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel VerticalAlignment="Center" Grid.Column="0">
-                        <!--<Button Content="Get Weather" Click="Button_Click"/>-->
-                        <Image Name="ResultImage"  Width="200" Height="200" HorizontalAlignment="Center"/>
-                        <TextBlock Name="ResultTextBlock" 
-                   Style="{StaticResource CaptionTextBlockStyle}" 
-                   Foreground="White"
-                   HorizontalAlignment="Center"/>
-                        <TextBlock Name="TempTextBlock" 
-                       Text="" 
-                       Foreground="White" 
-                       Style="{StaticResource HeaderTextBlockStyle}"
-                       HorizontalAlignment="Center"/>
-                        <TextBlock Name="DescriptionTextBlock" 
-                       Text="" 
-                       Foreground="White" 
-                       Style="{StaticResource SubheaderTextBlockStyle}"
-                       HorizontalAlignment="Center"/>
-                        <TextBlock Name="LocationTextBlock" 
-                       Text="" 
-                       Foreground="White" 
-                       Style="{StaticResource BaseTextBlockStyle}"
-                       HorizontalAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                        <ListView Name="ForecastDataListView"
-                                  ItemsSource="{Binding Source={StaticResource ForecastsCollection}}"
-                                  IsItemClickEnabled="False"
-                                  SelectionMode="None">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="local:List">
-                                    <StackPanel Orientation="Horizontal" Margin="10">
-                                        <Image Width="50" Height="50"
-                                               Margin="0,0,20,0"
-                                               Source="{Binding weather[0].icon, Converter={StaticResource IconValueFormatter}}"/>
-                                        <StackPanel HorizontalAlignment="Center">
-                                            <TextBlock Foreground="White"
-                                                       Style="{StaticResource SubtitleTextBlockStyle}"
-                                                       Text="{Binding temp, Converter={StaticResource MaxMinTempValueFormatter}}" />
-                                            <TextBlock Foreground="White"
-                                                       Text="{Binding weather[0].description}"/>
-                                            <TextBlock Foreground="White"
-                                                Text="{Binding dt, Converter={StaticResource UnixTimeValueFormatter}}" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackPanel>
-                    <TextBlock Grid.Row="1" 
-                               Grid.ColumnSpan="2"
-                               Margin="10,0,0,10"
-                               Name="StatusTextBlock" 
-                               Foreground="DarkGray" />
-                </Grid>
+                <Frame Name="MyContentFrame" />
             </SplitView.Content>
         </SplitView>
     </Grid>
