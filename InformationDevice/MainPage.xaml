@@ -13,15 +13,25 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <RelativePanel>
+        <RelativePanel Background="#FF125530">
             <Button Name="HamburgerButton"
                     RelativePanel.AlignLeftWithPanel="True"
                     Click="HamburgerButton_Click"
                     FontFamily="Segoe MDL2 Assets" 
-                    FontSize="20"
+                    FontSize="24"
                     Height="45"
                     Width="45"
+                    Foreground="LightGray"
                     Content="&#xE700;"/>
+            <Button Name="QuitButton"
+                    Click="QuitButton_Click"
+                    RelativePanel.AlignRightWithPanel="True" 
+                    FontFamily="Segoe MDL2 Assets" 
+                    FontSize="24"
+                    Height="45"
+                    Width="45"
+                    Foreground="LightGray"
+                    Content="&#xE7E8;" />
         </RelativePanel>
 
         <SplitView Grid.Row="1"
@@ -30,14 +40,16 @@
                    CompactPaneLength="45"
                    OpenPaneLength="200">
             <SplitView.Pane>
-                <StackPanel Background="#FF125530">
-                    <Button>
-                        <StackPanel Orientation="Horizontal">
-                            <SymbolIcon Symbol="Globe" Foreground="White" Margin="5,0,10,0"/>
-                            <TextBlock Text="Weather" Foreground="White" />
+                <ListBox Background="#FF125530"
+                         SelectionMode="Single">
+                    <ListBoxItem Name="WeatherItem">
+                        <StackPanel Orientation="Horizontal" >
+                            <TextBlock FontFamily="Segoe MDL2 Assets" FontSize="24" Foreground="LightGray" Text="&#xE753;"/>
+                            <TextBlock FontSize="20" Margin="20,0,0,0" Foreground="LightGray" Text="Weather"/>
                         </StackPanel>
-                    </Button>
-                </StackPanel>
+                    </ListBoxItem>
+                    
+                </ListBox>
             </SplitView.Pane>
 
             <SplitView.Content>
