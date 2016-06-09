@@ -25,10 +25,20 @@ namespace InformationDevice
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private DispatcherTimer timer;
+
         public MainPage()
         {
             this.InitializeComponent();
+            timer = new DispatcherTimer();
+            timer.Tick += UpdateCurrentTime;
             MyContentFrame.Navigate(typeof(WeatherPage));
+        }
+
+        private void UpdateCurrentTime(object sender, object e)
+        {
+            var now = DateTime.Now;
+            CurrentTimeTextBlock.Text = string.Format("{0}:{1}", now.Hour, now.Minute);
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
@@ -39,6 +49,14 @@ namespace InformationDevice
         private void QuitButton_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Exit();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            var now = DateTime.Now;
+            CurrentTimeTextBlock.Text = string.Format("{0}:{1}", now.Hour, now.Minute);
+            timer.Interval = TimeSpan.FromSeconds(10);
+            timer.Start();
         }
     }
 }
